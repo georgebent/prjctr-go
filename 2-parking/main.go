@@ -55,3 +55,13 @@ func park(p *Parking, c *Car) {
 
 	p.car = c
 }
+
+func (p Parking) parking(c *Car) {
+	if p.car != nil {
+		fmt.Println("Parking is full")
+
+		return
+	}
+
+	p.car = c
+}
