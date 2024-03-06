@@ -1,4 +1,4 @@
-package main
+package hw2_zoo
 
 import (
 	"fmt"
@@ -37,7 +37,7 @@ type Zoo struct {
 	animals   []*Animal
 }
 
-func main() {
+func Run() {
 	zoo := initializeZoo()
 	shawshankRedemption(zoo.cages)
 

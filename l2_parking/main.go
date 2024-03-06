@@ -1,4 +1,4 @@
-package main
+package l2_parking
 
 import (
 	"fmt"
