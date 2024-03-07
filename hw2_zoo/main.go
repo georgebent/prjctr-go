@@ -41,13 +41,10 @@ func main() {
 	zoo := initializeZoo()
 	shawshankRedemption(zoo.cages)
 
-	checkedSatisfied := zoo.zooKeeper.checkAnimals(zoo.cages)
-	if false == checkedSatisfied {
+	isSatisfied := zoo.zooKeeper.checkAnimals(zoo.cages)
+	if !isSatisfied {
 		zoo.zooKeeper.returnAnimals(zoo.cages, zoo.animals)
-	}
 
-	checkedSatisfied = zoo.zooKeeper.checkAnimals(zoo.cages)
-	if true == checkedSatisfied {
 		fmt.Println("Animals in cages and zookeeper can have free time")
 	}
 }
@@ -66,15 +63,28 @@ func (zk ZooKeeper) checkAnimals(cages []*Cage) bool {
 
 func (zk ZooKeeper) returnAnimals(cages []*Cage, animals []*Animal) {
 	for _, cage := range cages {
-		if cage.animal == nil {
-			for _, animal := range animals {
-				if animal.cageNumber == cage.number {
-					cage.animal = animal
-					fmt.Printf("%s is returned\n", animal)
-				}
-			}
+		if cage.animal != nil {
+			continue
+		}
+
+		animal := findAnimal(cage.number, animals)
+		if animal != nil {
+			cage.animal = animal
+			fmt.Printf("%s is returned\n", animal)
+
+			continue
 		}
 	}
+}
+
+func findAnimal(cageNumber int, animals []*Animal) *Animal {
+	for _, animal := range animals {
+		if animal.cageNumber == cageNumber {
+			return animal
+		}
+	}
+
+	return nil
 }
 
 func shawshankRedemption(cages []*Cage) {

@@ -1,4 +1,4 @@
-package main
+package hw1_biography
 
 import "fmt"
 
