@@ -71,8 +71,6 @@ func (zk ZooKeeper) returnAnimals(cages []*Cage, animals []*Animal) {
 		if animal != nil {
 			cage.animal = animal
 			fmt.Printf("%s is returned\n", animal)
-
-			continue
 		}
 	}
 }
