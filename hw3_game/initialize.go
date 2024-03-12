@@ -12,14 +12,8 @@ func initialize() (Scene, Player) {
 	}
 
 	start.getReward = func(player *Player) {
-		weapon := Weapon{
-			Item: Item{
-				name: ironSword,
-			},
-			rank: 1,
-		}
-
-		player.inventory.addWeapon(&weapon)
+		ironSwordWeapon := createWeapon(ironSword, 1)
+		player.inventory.addWeapon(&ironSwordWeapon)
 	}
 
 	forest := start.withName("Повернутися у ліс").withDescription("Ви знову у лісі")
@@ -53,8 +47,7 @@ func initPlayer() Player {
 	}
 
 	player := Player{
-		inventory:    &inventory,
-		isCampKilled: false,
+		inventory: &inventory,
 	}
 
 	return player
@@ -73,24 +66,15 @@ func initDoctor(village *Scene) Scene {
 			" вивчаючи справу, можливо вам пора навідатись у цю стару закинуту хатину.",
 		question: "Подальші дії",
 		isAllowed: func(player *Player) bool {
-			return !player.doctorVisited
+			return !player.hasProgress(doctorVisited)
 		},
 		getReward: func(player *Player) {
-			player.doctorVisited = true
+			player.addProgress(doctorVisited)
+			signAardSkill := createSign(signAard, false)
+			player.inventory.addSkill(&signAardSkill)
 
-			player.inventory.addSkill(&Skill{
-				Item: Item{
-					name: signAard,
-				},
-				isDefence: false,
-			})
-
-			player.inventory.addSkill(&Skill{
-				Item: Item{
-					name: signIgni,
-				},
-				isDefence: false,
-			})
+			signIgniSkill := createSign(signIgni, false)
+			player.inventory.addSkill(&signIgniSkill)
 		},
 	}
 
@@ -109,17 +93,13 @@ func initCamp(village *Scene) Scene {
 		description: "Ви нападаєте на розбійників, маючи надлюдські здібності ви з легкістю перемагаєте розбійників і отримуєте в винагороду арбалет",
 		question:    "Подальші дії",
 		isAllowed: func(player *Player) bool {
-			return !player.isCampKilled
+			return !player.hasProgress(isCampKilled)
 		},
 		getReward: func(player *Player) {
-			player.isCampKilled = true
+			player.addProgress(isCampKilled)
 
-			player.inventory.addWeapon(&Weapon{
-				Item: Item{
-					name: arbalest,
-				},
-				rank: 1,
-			})
+			arbalestWeapon := createWeapon(arbalest, 1)
+			player.inventory.addWeapon(&arbalestWeapon)
 		},
 	}
 
@@ -134,7 +114,7 @@ func initWitcherHouse(village *Scene) Scene {
 		description: "Ви підходите до дивного закинутого будинку, бачите велику купу предметів при вході",
 		question:    "Напевно без магії тут не обійтись, ви пробуєте:",
 		isAllowed: func(player *Player) bool {
-			return !player.witcherHouseVisited
+			return !player.hasProgress(witcherHouseVisited)
 		},
 	}
 
@@ -158,19 +138,13 @@ func initWitcherHouse(village *Scene) Scene {
 					return player.inventory.hasSkill(sign)
 				},
 				getReward: func(player *Player) {
-					player.witcherHouseVisited = true
-
-					player.inventory.addSkill(&Skill{
-						Item: Item{
-							name: signKven,
-						},
-						isDefence: true,
-					})
+					player.addProgress(witcherHouseVisited)
+					signKvenSkill := createSign(signKven, true)
+					player.inventory.addSkill(&signKvenSkill)
 				},
 			}
 
 			houseSuccess = houseSuccess.withOption(village)
-
 			witcherHouse = witcherHouse.withOption(&houseSuccess)
 
 			continue
@@ -200,7 +174,7 @@ func initCaveQuest(forest *Scene) Scene {
 		description: "Вхід в печеру закритий дивним замком, помітно що це магія холоду, ви можете використати магічне заклинання, ваші дії:",
 		question:    "Ваші дії",
 		isAllowed: func(player *Player) bool {
-			return !player.caveVisited
+			return !player.hasProgress(caveVisited)
 		},
 	}
 
@@ -221,14 +195,9 @@ func initCaveQuest(forest *Scene) Scene {
 					"тепер потрібно знайти кривдника, зараз якраз північ, отже цього разу вас чекає бій з вовкулаком",
 				question: "Ваші дії",
 				getReward: func(player *Player) {
-					player.caveVisited = true
-
-					player.inventory.addWeapon(&Weapon{
-						Item: Item{
-							name: silverSword,
-						},
-						rank: 2,
-					})
+					player.addProgress(caveVisited)
+					silverSwordWeapon := createWeapon(silverSword, 2)
+					player.inventory.addWeapon(&silverSwordWeapon)
 				},
 				isAllowed: func(player *Player) bool {
 					return player.inventory.hasSkill(sign)

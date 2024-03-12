@@ -8,6 +8,11 @@ const signAard = "Аард"
 const signIgni = "Ігні"
 const signKven = "Квен"
 
+const isCampKilled = "isCampKilled"
+const doctorVisited = "doctorVisited"
+const witcherHouseVisited = "witcherHouseVisited"
+const caveVisited = "caveVisited"
+
 type Item struct {
 	name string
 }
@@ -28,11 +33,8 @@ type Inventory struct {
 }
 
 type Player struct {
-	inventory           *Inventory
-	isCampKilled        bool
-	doctorVisited       bool
-	witcherHouseVisited bool
-	caveVisited         bool
+	inventory *Inventory
+	progress  []string
 }
 
 func (i *Inventory) addSkill(skill *Skill) {
@@ -69,6 +71,24 @@ func (i *Inventory) hasWeapon(name string) bool {
 	}
 
 	return false
+}
+
+func (p *Player) hasProgress(progressKey string) bool {
+	for _, progressPart := range p.progress {
+		if progressPart == progressKey {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (p *Player) addProgress(progressKey string) {
+	if p.hasProgress(progressKey) {
+		return
+	}
+
+	p.progress = append(p.progress, progressKey)
 }
 
 func getAllGameSigns() []string {
