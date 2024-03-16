@@ -1,4 +1,4 @@
-package main
+package hw3_game
 
 func initialize() (Scene, Player) {
 	player := initPlayer()

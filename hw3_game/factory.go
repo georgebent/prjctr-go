@@ -1,4 +1,4 @@
-package main
+package hw3_game
 
 func createWeapon(name string, rank int) Weapon {
 	return Weapon{
