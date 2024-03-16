@@ -1,4 +1,4 @@
-package main
+package hw3_game
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func main() {
+func Run() {
 	scene, player := initialize()
 
 	for {

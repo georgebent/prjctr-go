@@ -1,4 +1,4 @@
-package main
+package hw3_game
 
 const ironSword = "Залізний меч"
 const silverSword = "Срібний меч"

@@ -1,4 +1,4 @@
-package main
+package hw3_game
 
 type Scene struct {
 	name        string
