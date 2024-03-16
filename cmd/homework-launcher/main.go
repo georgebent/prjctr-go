@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/georgebent/prjctr-go/l5_map"
+	"github.com/georgebent/prjctr-go/pkg/l5_map"
 )
 
 func main() {
