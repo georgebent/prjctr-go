@@ -1,4 +1,4 @@
-package main
+package hw4_1_text_editor
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 
 const defaultSearch = "feel"
 
-func main() {
+func Run() {
 	search := defaultSearch
 	if len(os.Args) > 1 {
 		search = os.Args[1]

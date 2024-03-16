@@ -1,4 +1,4 @@
-package main
+package hw2_zoo
 
 import (
 	"fmt"
