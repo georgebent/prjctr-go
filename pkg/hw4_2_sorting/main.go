@@ -1,4 +1,4 @@
-package main
+package hw4_2_sorting
 
 import (
 	"fmt"
@@ -13,11 +13,11 @@ func (u User) String() string {
 	return fmt.Sprintf("%d;", u.Id)
 }
 
-func main() {
-	users := createUsers()
+func RunExample() {
+	users := CreateUsers()
 	fmt.Printf("Users: %s\n", users)
 
-	uniqueUsers := getUniqueUsers(users)
+	uniqueUsers := GetUniqueUsers(users)
 	fmt.Printf("Unique: %s\n", uniqueUsers)
 
 	sort.Slice(uniqueUsers, func(i, j int) bool {
@@ -37,7 +37,7 @@ func isExist(users []User, user User) bool {
 	return false
 }
 
-func getUniqueUsers(users []User) []User {
+func GetUniqueUsers(users []User) []User {
 	var uniqueUsers []User
 
 	for _, user := range users {
@@ -49,7 +49,7 @@ func getUniqueUsers(users []User) []User {
 	return uniqueUsers
 }
 
-func createUsers() []User {
+func CreateUsers() []User {
 	return []User{
 		{Id: 10},
 		{Id: 1},
