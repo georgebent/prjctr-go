@@ -52,19 +52,42 @@ func RunFilesTimeExample() {
 		"10K": "pkg/hw5_text_editor/texts/text10K.txt",
 	}
 
-	search := "lorem"
+	searchWords := []string{
+		"lorem",
+		"ipsum",
+		"in",
+		"arcu",
+		"orci",
+	}
 
 	for name, file := range textFiles {
 		text := ReadFile(file)
 
-		start := time.Now()
-		foundMap := findWordInMap(text, search)
-		elapsed := time.Since(start).Seconds()
-		fmt.Printf("Індексований Пошук серед %v рядків, тривав: %.8f секунд і знайшов %d рядків\n", name, elapsed, len(foundMap))
+		var elapsedMap []float64
+		var elapsedLine []float64
 
-		start = time.Now()
-		foundLine := findWordInLine(text, search)
-		elapsed = time.Since(start).Seconds()
-		fmt.Printf("Лінійний Пошук серед %v рядків, тривав: %.8f секунд і знайшов %d рядків\n\n", name, elapsed, len(foundLine))
+		for _, search := range searchWords {
+			start := time.Now()
+			findWordInMap(text, search)
+			elapsedMap = append(elapsedMap, time.Since(start).Seconds())
+
+			start = time.Now()
+			findWordInLine(text, search)
+			elapsedLine = append(elapsedLine, time.Since(start).Seconds())
+		}
+
+		fmt.Printf("Індексований Пошук серед %v рядків, тривав в середньому: %.8f секунд\n", name, getAvgFloat(elapsedMap))
+		fmt.Printf("Лінійний Пошук серед %v рядків, тривав в середньому: %.8f секунд \n\n", name, getAvgFloat(elapsedLine))
 	}
+}
+
+func getAvgFloat(numbers []float64) float64 {
+	var sum float64
+	count := len(numbers)
+
+	for _, number := range numbers {
+		sum += number
+	}
+
+	return sum / float64(count)
 }
