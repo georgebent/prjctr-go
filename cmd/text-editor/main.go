@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	hw5_text_editor.RunFilesTimeExample()
+	hw5_text_editor.RunFilesSearchTimeExample()
 }

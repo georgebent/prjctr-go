@@ -6,11 +6,13 @@ import (
 )
 
 type MapTextEditor struct {
-	text []string
+	text    []string
+	indexed map[string][]int
 }
 
 func (editor *MapTextEditor) Init(text []string) {
 	editor.text = text
+	editor.indexed = editor.IndexWordRows()
 }
 
 func (editor *MapTextEditor) Clear() {
@@ -22,10 +24,9 @@ func (editor *MapTextEditor) AddRow(row string) {
 }
 
 func (editor *MapTextEditor) FindWordInRows(search string) []string {
-	mappedWords := editor.IndexWordRows()
 	var rows []string
 
-	for _, rowKey := range mappedWords[strings.ToLower(search)] {
+	for _, rowKey := range editor.indexed[strings.ToLower(search)] {
 		rows = append(rows, editor.text[rowKey])
 	}
 
