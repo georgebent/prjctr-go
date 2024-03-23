@@ -6,15 +6,6 @@ const PlaneType = "plane"
 const BusType = "bus"
 const TrainType = "train"
 
-type Transport interface {
-	GetId() int
-	AddPassenger(passenger *passenger.Passenger)
-	DropOffPassenger(passenger *passenger.Passenger)
-	IsFull() bool
-	GetType() string
-	GetPassengersInfo() map[int]*passenger.Passenger
-}
-
 type BaseTransport struct {
 	id            int
 	places        int
@@ -66,15 +57,14 @@ func (t *BaseTransport) DropOffPassenger(passenger *passenger.Passenger) {
 	delete(t.passengers, passenger.GetId())
 }
 
-func CreateTransport(transportType string, id int, places int) Transport {
-	switch transportType {
-	case PlaneType:
-		return &Plane{BaseTransport{id: id, places: places, transportType: transportType}}
-	case BusType:
-		return &Bus{BaseTransport{id: id, places: places, transportType: transportType}}
-	case TrainType:
-		return &Train{BaseTransport{id: id, places: places, transportType: transportType}}
-	}
+func CreateBus(id int, places int) *Bus {
+	return &Bus{BaseTransport{id: id, places: places, transportType: BusType}}
+}
 
-	return nil
+func CreatePlain(id int, places int) *Plane {
+	return &Plane{BaseTransport{id: id, places: places, transportType: PlaneType}}
+}
+
+func CreateTrain(id int, places int) *Train {
+	return &Train{BaseTransport{id: id, places: places, transportType: TrainType}}
 }

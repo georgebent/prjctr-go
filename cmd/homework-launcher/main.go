@@ -10,9 +10,9 @@ import (
 func main() {
 	currentRoute := route.NewRoute("Kyiv (Ukraine)", "Amsterdam (Netherlands)")
 
-	train := transport.CreateTransport(transport.TrainType, 1, 1064)
-	plain := transport.CreateTransport(transport.PlaneType, 2, 360)
-	bus := transport.CreateTransport(transport.BusType, 3, 48)
+	train := transport.CreateTrain(1, 1064)
+	plain := transport.CreatePlain(2, 360)
+	bus := transport.CreateBus(3, 48)
 
 	currentRoute.AddTransport(train).AddTransport(plain).AddTransport(bus)
 
